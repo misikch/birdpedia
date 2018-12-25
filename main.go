@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", handler)
+	router := mux.NewRouter()
 
-	http.ListenAndServe(":8080", nil)
+	router.HandleFunc("/", handler).Methods("GET")
+
+	http.ListenAndServe(":8080", router)
 }
 
 
