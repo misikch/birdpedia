@@ -1,0 +1,2 @@
+# birdpedia
+simple go project
