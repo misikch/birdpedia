@@ -7,11 +7,17 @@ import (
 )
 
 func main() {
-	router := mux.NewRouter()
-
-	router.HandleFunc("/", handler).Methods("GET")
+	router := makeRouter()
 
 	http.ListenAndServe(":8080", router)
+}
+
+func makeRouter() *mux.Router {
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", handler).Methods("GET")
+
+	return r
 }
 
 
