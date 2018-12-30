@@ -65,3 +65,33 @@ func TestRouter(t *testing.T) {
 		t.Errorf("unexpected response body. Got: %v, expected: %v", responseString, expected)
 	}
 }
+
+func TestRouterForNotExistingRoute (t *testing.T) {
+	r := makeRouter()
+
+	mockServer := httptest.NewServer(r)
+
+	resp, err := http.Post(mockServer.URL + "/", "", nil)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if resp.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("unexpected status code. Geot %v, exptected %v", resp.StatusCode, http.StatusMethodNotAllowed)
+	}
+
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	respString := string(b)
+	expected := ""
+
+	if respString != expected {
+		t.Errorf("Response body should be empty string, got: %v", respString)
+	}
+}
